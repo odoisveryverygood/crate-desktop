@@ -1,0 +1,26 @@
+# Credentials and private settings
+.env
+.env.*
+*.env
+.dev.vars*
+.secrets/
+Config/Secrets.xcconfig
+Secrets.plist
+*.p12
+*.p8
+*.key
+*.pem
+# Generated output and local tools
+node_modules/
+.venv/
+.wrangler/
+build/
+DerivedData/
+*.xcodeproj/
+xcuserdata/
+__pycache__/
+*.pyc
+.DS_Store
+desktop/assets/
+desktop/dist/
+*.log

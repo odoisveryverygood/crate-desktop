@@ -1,0 +1,19 @@
+name = "crate-desktop-api"
+main = "src/index.js"
+compatibility_date = "2025-10-01"
+workers_dev = true
+
+[vars]
+AI_DAILY_LIMIT = "1000"
+JEV_DAILY_LIMIT = "5000"
+
+[[durable_objects.bindings]]
+name = "QUOTA"
+class_name = "Quota"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Quota"]
+
+[observability]
+enabled = false

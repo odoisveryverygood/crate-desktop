@@ -1,0 +1,127 @@
+{
+  "kit": "CRATE original synthesized starter",
+  "files": [
+    {
+      "name": "ANALOG KICK 1",
+      "durationSec": 0.3,
+      "file": "01_kick.wav",
+      "pad": 1,
+      "category": "kick"
+    },
+    {
+      "name": "ANALOG KICK 2",
+      "durationSec": 0.3449886621315193,
+      "file": "02_kick_alt.wav",
+      "pad": 2,
+      "category": "kick"
+    },
+    {
+      "name": "ANALOG SNARE 1",
+      "durationSec": 0.22,
+      "file": "03_snare.wav",
+      "pad": 3,
+      "category": "snare"
+    },
+    {
+      "name": "ANALOG CLAP 1",
+      "durationSec": 0.24,
+      "file": "04_clap.wav",
+      "pad": 4,
+      "category": "clap"
+    },
+    {
+      "name": "ANALOG HAT 1",
+      "durationSec": 0.07,
+      "file": "05_chat.wav",
+      "pad": 5,
+      "category": "hat"
+    },
+    {
+      "name": "ANALOG OPENHAT 1",
+      "durationSec": 0.25,
+      "file": "06_ohat.wav",
+      "pad": 6,
+      "category": "openhat"
+    },
+    {
+      "name": "ANALOG RIM 1",
+      "durationSec": 0.13,
+      "file": "07_rim.wav",
+      "pad": 7,
+      "category": "perc"
+    },
+    {
+      "name": "ANALOG SHAKER 1",
+      "durationSec": 0.14,
+      "file": "08_shaker.wav",
+      "pad": 8,
+      "category": "perc"
+    },
+    {
+      "name": "ANALOG 808 1",
+      "rootNote": 36,
+      "key": "C",
+      "durationSec": 1.4,
+      "file": "09_808.wav",
+      "pad": 9,
+      "category": "bass"
+    },
+    {
+      "name": "ANALOG CYMBAL 1",
+      "durationSec": 0.9,
+      "file": "10_crash.wav",
+      "pad": 10,
+      "category": "cymbal"
+    },
+    {
+      "name": "ANALOG VOCAL 1",
+      "rootNote": 60,
+      "key": "C",
+      "durationSec": 0.5,
+      "file": "11_vox.wav",
+      "pad": 11,
+      "category": "vocal"
+    },
+    {
+      "name": "ANALOG FX 1",
+      "durationSec": 1.0,
+      "file": "12_fx.wav",
+      "pad": 12,
+      "category": "fx"
+    },
+    {
+      "name": "ANALOG KEYS 1",
+      "rootNote": 60,
+      "key": "C",
+      "durationSec": 1.4,
+      "file": "13_keys.wav",
+      "pad": 13,
+      "category": "keys"
+    },
+    {
+      "name": "ANALOG SYNTH 1",
+      "rootNote": 60,
+      "key": "C",
+      "durationSec": 1.1,
+      "file": "14_synth.wav",
+      "pad": 14,
+      "category": "synth"
+    },
+    {
+      "name": "ANALOG TEXTURE 1",
+      "durationSec": 1.5,
+      "file": "15_texture.wav",
+      "pad": 15,
+      "category": "texture"
+    },
+    {
+      "file": "16_loop_chop.wav",
+      "pad": 16,
+      "name": "HOUSE HAMMER 1",
+      "category": "loop",
+      "bpm": 124,
+      "key": "Db",
+      "durationSec": 7.741927437641723
+    }
+  ]
+}

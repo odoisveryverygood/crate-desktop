@@ -1,0 +1,62 @@
+{
+  "name": "crate-desktop",
+  "version": "0.4.0",
+  "description": "CRATE AI sampler for Windows and Linux",
+  "main": "app/main.cjs",
+  "author": "CRATE",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.mjs",
+    "verify": "electron . --verify",
+    "build:windows": "electron-builder --win zip nsis --x64 --publish never",
+    "build:linux": "electron-builder --linux tar.gz --x64 --publish never",
+    "build:preview": "electron-builder --mac dir --arm64 --publish never",
+    "build:windows:cross": "electron-builder --win zip --x64 --publish never --config.win.signAndEditExecutable=false",
+    "verify:hosted": "electron . --verify --hosted"
+  },
+  "devDependencies": {
+    "electron": "44.7.0",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "com.crateduo.desktop",
+    "productName": "CRATE",
+    "asar": true,
+    "files": [
+      "app/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "assets/library",
+        "to": "StudioLibrary"
+      }
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "artifactName": "CRATE-${version}-${os}-${arch}.${ext}",
+    "win": {
+      "target": "zip",
+      "signExecutable": false
+    },
+    "linux": {
+      "target": "tar.gz",
+      "category": "AudioVideo;Audio;Music;"
+    },
+    "mac": {
+      "target": "dir",
+      "identity": null
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "CRATE",
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "CRATE-Setup-${version}-${arch}.${ext}"
+    }
+  }
+}

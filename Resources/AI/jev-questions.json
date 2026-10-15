@@ -1,0 +1,249 @@
+{
+  "notes": "Prompt/config data for TypeSafe Jev (POST https://api.typesafe.ai/v1/systemone, Authorization: Bearer $TYPESAFE_API_KEY, model jev-latest). NEVER use jevapi.org / tokenra.io (flagged as credential harvesting). Each object below is the 'questions' map for one call; the app fills 'state' at runtime. Choice criteria = {option: description}; score criteria = ordered levels (index 0..n-1 maps to 0..1); noul = probability.",
+  "plan": {
+    "purpose": "Instant intent parse of a typed/spoken request. Fired on submit; result drives local sample retrieval + groove templates within ~300 ms total.",
+    "stateTemplate": "User request: \"{prompt}\"\nCurrent session: bpm {bpm}; drum style {drumStyle}; sample {sampleName} ({sampleKey}); pads loaded: {padsSummary}.",
+    "questions": {
+      "scope": {
+        "type": "choice",
+        "instructions": "What does the user want the groovebox to do with this request?",
+        "criteria": {
+          "full_beat": "Make a whole beat or loop: drums AND a melodic sample/instrument (bass may be implied)",
+          "drums_only": "Load or make drums only (kicks, snares, hats, a drum kit or drum pattern) — no melodic sample requested",
+          "sample_only": "Find a melodic sample or loop only (piano, keys, guitar, strings, vocal, break) — no drums requested",
+          "bass_only": "Only add or change a bassline",
+          "change_groove": "Modify the existing drum pattern or feel (more laid back, busier, simpler, add fills, swing more) without loading new sounds",
+          "single_sound": "Put one specific sound on one pad"
+        }
+      },
+      "drum_style": {
+        "type": "choice",
+        "instructions": "Which drum style or producer vibe does the request ask for? Use 'unspecified' if no drum style is implied. Artist, producer or song names count: map them to the closest style (e.g. NewJeans → jerseyclub, PinkPantheress → garage, Burna Boy → afrobeats, Metro Boomin → trap, Nujabes → jazzhop).",
+        "criteria": {
+          "dilla": "J Dilla / Slum Village / Donuts: drunk, unquantized, late snares, laid-back swing",
+          "jazzhop": "Nujabes / Freddie Joachim / Uyama Hiroto jazz hop: soft swung drums, brushy hats, rim clicks",
+          "boombap": "90s boom bap: DJ Premier, Pete Rock, Wu-Tang, hard kick and snare, golden era",
+          "lofi": "lo-fi hip hop / chill study beats: soft, muffled, dusty, relaxed",
+          "vintage": "vintage 60s-70s soul and funk breaks, SP-1200 / MPC60 crunch, dusty vinyl drums",
+          "house": "house / disco / deep house: four-on-the-floor kick, claps, open hats, 120-128 BPM (Kaytranada, Daft Punk)",
+          "trap": "trap: 808s, rolling hi-hats, hard claps, 130-150 BPM",
+          "drill": "UK/NY drill: sliding 808s, syncopated snares, triplet hats",
+          "rnb": "R&B / neo soul slow jam: smooth, soft kick, finger snaps, 64-80 BPM",
+          "jerseyclub": "Jersey club / Baltimore club: bouncy 5-kick 'bed squeak' pattern, chopped vocal shots, 130-145 BPM (NewJeans, LE SSERAFIM, Lil Uzi club songs)",
+          "garage": "UK garage / 2-step: shuffled skippy hats, syncopated 2-step kicks, 128-138 BPM (PinkPantheress, Fred again.., Burial, Craig David, Disclosure)",
+          "afrobeats": "Afrobeats / amapiano: log drums, clave rim patterns, shakers, bouncy 100-112 BPM (Burna Boy, Wizkid, Rema, Tems, Tyla)",
+          "kpop": "K-pop / bright dance-pop / Y2K pop: punchy four-on-the-floor or pop grooves, 100-130 BPM (BLACKPINK, TWICE, aespa, Dua Lipa, The Weeknd)",
+          "unspecified": "No drum style stated or implied"
+        }
+      },
+      "sample_style": {
+        "type": "choice",
+        "instructions": "Which style should the melodic sample/loop have? Use 'unspecified' if no melodic sample is requested or no style is implied. Artist, producer or song names count: map them to the closest style (e.g. NewJeans → jerseyclub, PinkPantheress → garage, Burna Boy → afrobeats, Metro Boomin → trap, Nujabes → jazzhop).",
+        "criteria": {
+          "dilla": "J Dilla soul-chop style: warm, sampled soul/jazz, slightly detuned",
+          "jazzhop": "Nujabes / Freddie Joachim jazz: jazz piano, Rhodes, modal chords, melancholic and beautiful",
+          "boombap": "90s boom bap: dark jazz loops, dusty piano stabs, horn stabs",
+          "lofi": "lo-fi chill: mellow keys, soft guitar, dreamy and nostalgic",
+          "vintage": "vintage soul/funk record: old, dusty, crackly 60s-70s samples",
+          "house": "house: chord stabs, organ, disco strings, uplifting",
+          "trap": "trap: dark bells, plucks, piano melodies",
+          "drill": "drill: dark strings, choirs, sliding melodies",
+          "rnb": "R&B / neo soul: lush Rhodes, smooth guitar, jazzy chords",
+          "jerseyclub": "Jersey club: bright chopped vocals, plucky synths, dreamy Y2K chords",
+          "garage": "UK garage: soulful chopped vocals, warm organ / Rhodes chords, airy pads",
+          "afrobeats": "Afrobeats: bright guitar licks, marimba / log drum melodies, warm keys",
+          "kpop": "K-pop / dance-pop: bright synths, glossy pianos, catchy plucks",
+          "unspecified": "No melodic style stated or implied"
+        }
+      },
+      "instrument": {
+        "type": "choice",
+        "instructions": "Which instrument should the melodic sample feature?",
+        "criteria": {
+          "piano": "acoustic piano",
+          "rhodes": "Rhodes / electric piano / Wurlitzer",
+          "guitar": "guitar (jazz, nylon, clean electric)",
+          "strings": "strings / orchestral",
+          "pad": "synth pad / ambient",
+          "vibes": "vibraphone / bells / mallets",
+          "horns": "horns / brass / sax / flute",
+          "vocal": "vocal chops / voice",
+          "break": "a drum break to chop",
+          "any": "no instrument specified"
+        }
+      },
+      "mood": {
+        "type": "choice",
+        "instructions": "What mood does the request suggest?",
+        "criteria": {
+          "melancholic": "sad, melancholic, bittersweet",
+          "warm": "warm, cozy, comforting",
+          "dreamy": "dreamy, floaty, hazy",
+          "nostalgic": "nostalgic, old memories",
+          "uplifting": "uplifting, happy, bright",
+          "dark": "dark, moody, menacing",
+          "smooth": "smooth, sensual, late night",
+          "groovy": "groovy, funky, bouncy",
+          "unspecified": "no mood implied"
+        }
+      },
+      "bars": {
+        "type": "choice",
+        "instructions": "How many bars long should the loop be?",
+        "criteria": {
+          "1": "1 bar",
+          "2": "2 bars",
+          "4": "4 bars",
+          "8": "8 bars",
+          "unspecified": "length not mentioned"
+        }
+      },
+      "tempo": {
+        "type": "choice",
+        "instructions": "What tempo range fits the request?",
+        "criteria": {
+          "slow": "70-80 BPM (slow jam, lo-fi)",
+          "mid": "84-94 BPM (boom bap, Dilla, jazz hop)",
+          "upbeat": "96-110 BPM (funk, uptempo hip hop)",
+          "dance": "120-128 BPM (house, disco)",
+          "fast": "138-150 BPM (trap, drill)",
+          "unspecified": "no tempo implied beyond the style"
+        }
+      },
+      "laidback": {
+        "type": "score",
+        "instructions": "How laid back / behind the beat / swung should the drums feel?",
+        "criteria": [
+          "Perfectly quantized, rigid, machine-tight",
+          "Slight swing",
+          "Noticeable swing, relaxed",
+          "Very laid back, late snares, loose",
+          "Extremely drunk and unquantized, Dilla-level"
+        ]
+      },
+      "vintage": {
+        "type": "score",
+        "instructions": "How old / dusty / lo-fi should the sounds be?",
+        "criteria": [
+          "Modern, clean, crisp, digital",
+          "Mostly clean",
+          "Some warmth and dust",
+          "Dusty, vinyl, tape-saturated",
+          "Extremely old, crackly, SP-1200 crunchy"
+        ]
+      },
+      "energy": {
+        "type": "score",
+        "instructions": "How energetic should the beat be?",
+        "criteria": [
+          "Very calm, sparse",
+          "Calm",
+          "Medium",
+          "Energetic",
+          "Very energetic, hard-hitting"
+        ]
+      },
+      "brightness": {
+        "type": "score",
+        "instructions": "How bright or dark should the sound be?",
+        "criteria": [
+          "Very dark, muffled",
+          "Darkish, warm",
+          "Balanced",
+          "Bright",
+          "Very bright, crisp, airy"
+        ]
+      },
+      "wants_bass": {
+        "type": "noul",
+        "instructions": "A bassline should be added under the beat (true unless the user asks for drums only, sample only, or explicitly says no bass).",
+        "criteria": {
+          "true": "add or suggest a bassline",
+          "false": "no bassline wanted or not relevant"
+        }
+      }
+    }
+  },
+  "perform": {
+    "purpose": "Per-bar performer. Called ~1 bar ahead (at the start of bar N, decide bar N+1). Must return well within one bar (2.7 s at 89 BPM).",
+    "stateTemplate": "Style: {styleLabel}. BPM {bpm}. Bar {barInPhrase} of {phraseBars}. Energy {energy}. Last fill {barsSinceFill} bars ago ({lastFill}). Active parts: {activeParts}. Performer mode: {intensity}.",
+    "questions": {
+      "fill": {
+        "type": "choice",
+        "instructions": "Which drum fill (if any) should play in the NEXT bar? Fills belong mostly at the end of 4- or 8-bar phrases; don't repeat the same fill twice in a row.",
+        "criteria": {
+          "none": "no fill, keep the groove",
+          "snare_roll": "snare roll building into the next phrase",
+          "hat_stutter": "hi-hat stutter / ratchet on the last beat",
+          "kick_double": "extra kicks at the end of the bar",
+          "dropout": "drop the kick and snare for the second half of the bar",
+          "ghost_notes": "add quiet ghost snares for extra swing",
+          "crash_next": "crash cymbal on the downbeat of the following bar",
+          "halftime": "half-time feel for one bar"
+        }
+      },
+      "energy": {
+        "type": "score",
+        "instructions": "How much energy should the next bar have relative to the song's arc?",
+        "criteria": [
+          "Breakdown, minimal",
+          "Low",
+          "Medium",
+          "High",
+          "Peak"
+        ]
+      },
+      "variation": {
+        "type": "noul",
+        "instructions": "The next bar should vary the hi-hat or kick pattern slightly instead of repeating exactly.",
+        "criteria": {
+          "true": "vary it",
+          "false": "repeat exactly"
+        }
+      }
+    }
+  },
+  "route": {
+    "purpose": "Single sound request -> which pad category, pitched?, decay. Used for 'single_sound' scope and for any sound ElevenLabs generates.",
+    "stateTemplate": "Sound description: \"{prompt}\"",
+    "questions": {
+      "category": {
+        "type": "choice",
+        "instructions": "Which pad category best fits this sound description?",
+        "criteria": {
+          "kick": "kick drum",
+          "snare": "snare drum",
+          "clap": "clap or snap",
+          "hat": "closed hi-hat",
+          "openhat": "open hi-hat",
+          "rim": "rimshot or side-stick",
+          "perc": "percussion (conga, bongo, tambourine, woodblock, bottle, foley hit)",
+          "shaker": "shaker",
+          "cymbal": "crash or ride cymbal",
+          "808": "808 bass drum / sub bass",
+          "bass": "bass guitar or synth bass note",
+          "fx": "effect: riser, impact, sweep, vinyl stop, reverse",
+          "vocal": "vocal chop, ad-lib, voice",
+          "texture": "background texture: vinyl crackle, rain, tape hiss, room tone",
+          "keys": "piano / Rhodes / keys note or chord",
+          "synth": "synth pluck, bell, lead or pad note"
+        }
+      },
+      "pitched": {
+        "type": "noul",
+        "instructions": "This sound has a clear musical pitch that should follow the track's key (as opposed to unpitched percussion or noise)."
+      },
+      "decay": {
+        "type": "score",
+        "instructions": "How long is this sound's decay or tail?",
+        "criteria": [
+          "Very short, clicky",
+          "Short",
+          "Medium",
+          "Long",
+          "Very long, sustained"
+        ]
+      }
+    }
+  }
+}
